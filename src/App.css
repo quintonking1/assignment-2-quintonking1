@@ -1,1 +1,230 @@
-/* Paste your Assignment 1 styles.css here. Keep the icons in src/assets/ so url(assets/...) paths keep working. */
+/* This is your CSS files */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+/* Variables */
+:root {
+  --header-height: 48px;
+  --nav-width: 300px;
+  --header-bg: #dc4c3e;
+  --header-text: #ffffff;
+  --nav-bg: #fefbf2;
+  --text: #000000;
+  --count: #7e7d79;
+  --border: #e0e0e5;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+}
+
+/* React renders into #root, so the page layout lives here instead of on body */
+#root {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+
+/*header content*/
+
+header {
+  width: 100%;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 16px;
+  background-color: var(--header-bg);
+  color: var(--header-text);
+}
+.menu-checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hamburger {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-image: url("assets/menu_icon.png");
+  cursor: pointer;
+}
+
+.search-form {
+  position: relative;
+}
+
+.search-form input {
+  background: url("assets/search_icon.png") no-repeat 10px center;
+  background-size: 16px 16px;
+  padding: 8px 12px 8px 34px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.search-form img {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+}
+
+.taskcounter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;  
+}
+
+.taskcounter img {
+  width: 16px;
+  height: 16px;
+}
+
+
+#site-search {
+  width: 240px;
+  padding: 6px 12px 6px 30px;
+  border: none;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font: inherit;
+}
+
+#site-search::placeholder {
+  color: var(--header-text);
+}
+
+#site-search:focus {
+  outline: none;
+  background-color: #ffffff;
+  color: var(--text);
+}
+
+/*navigation content*/
+
+nav {
+  width: var(--nav-width);
+  flex-shrink: 0;
+  padding: 32px 16px 16px 40px;
+  background-color: var(--nav-bg);
+}
+
+    .tab-menu a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .tab-item span {
+      color: var(--count);
+    }
+
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+main {
+  flex: 1;
+  min-width: 0;
+  min-height: calc(100vh - var(--header-height));
+  padding: 32px 40px;
+  color: var(--text);
+}
+
+/* Task list */
+
+
+main h1 {
+  font-size: 20px;
+  margin: 0 0 16px;
+}
+
+
+#tasklist {
+  list-style: none;
+}
+
+#tasklist li {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+#tasklist input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  border: 1px solid var(--count);
+  border-radius: 50%;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+#tasklist .check-icon {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#tasklist input[type="checkbox"]:checked + .check-icon {
+  display: block;
+}
+
+#tasklist label {
+  cursor: pointer;
+}
+
+
+#tasklist input[type="checkbox"]:checked {
+  background-color: #dc4c3e;
+  border-color: #dc4c3e;
+}
+
+
+/*Resposnive styles*/
+
+@media (max-width: 786px) {
+  nav {
+    display: none;
+  }
+
+  main {
+    padding: 24px 16px;
+  }
+
+  .search-form {
+    flex: 1;
+    min-width: 0;
+  }
+
+  #site-search {
+    width: 100%;
+  }
+}
