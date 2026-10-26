@@ -1,12 +1,12 @@
 import checkIcon from '../assets/check_icon.png'
 
-function taskCounter ({total, completed}) {
+function TaskCounter ({total, completed}) {
     return (
         <div className="taskcounter">
             <img src={checkIcon} alt=''/>
-            <span>{total}/{completed}</span>
+            <span>{completed}/{total}</span>
         </div>
     )
 }
 
-export default taskCounter
+export default TaskCounter

@@ -1,7 +1,7 @@
-import taskItem from "./taskItem"
+import TaskItem from "./TaskItem"
 
-function taskList ({tasks, onToggle, onDelete}){
-    if (taskList === 0) {
+function TaskList ({tasks, onToggle, onDelete}){
+    if (tasks.length === 0) {
         return <p className = "emptyState">No tasks to show</p>
     }
     
@@ -19,4 +19,4 @@ function taskList ({tasks, onToggle, onDelete}){
       )
     }
 
-export default taskList
+export default TaskList

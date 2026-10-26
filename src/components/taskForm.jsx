@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function taskForm({onAdd}) {
+function TaskForm({onAdd}) {
     const [text, setText]=useState('')
 
     function handleSubmit (event) {
@@ -28,4 +28,4 @@ function taskForm({onAdd}) {
     )
 }
 
-export default taskForm
+export default TaskForm

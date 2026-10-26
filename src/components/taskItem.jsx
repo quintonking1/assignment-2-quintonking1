@@ -1,6 +1,6 @@
-import checkIcon from './src/assets/check_Icon.png'
+import checkIcon from '../assets/check_icon.png'
 
-function taskItem({ task, onToggle, onDelete }) {
+function TaskItem({ task, onToggle, onDelete }) {
     const inputId = `task-${task.id}`
   
     return (
@@ -19,9 +19,10 @@ function taskItem({ task, onToggle, onDelete }) {
           onClick={() => onDelete(task.id)}
           aria-label={`Delete ${task.text}`}
         >
+          Delete
         </button>
       </li>
     )
   }
 
-export default taskItem
+export default TaskItem
