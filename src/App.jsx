@@ -1,5 +1,4 @@
-import { useState } from "react";
-
+import { useState } from 'react'
 import './App.css'
 
 import TaskList from './components/TaskList'
@@ -14,42 +13,44 @@ import upcomingIcon from './assets/upcoming_icon.png'
 const initialTasks = [
   { id: 1, text: 'Call Mom', completed: false },
   { id: 2, text: 'Buy the new issue of Scientific American', completed: false },
-  { id: 3, text: 'Return the textbook to Josie', completed: false },
+  { id: 3, text: 'Return the textbook to Josie', completed: true },
   { id: 4, text: 'Buy the new album by Rake', completed: false },
   { id: 5, text: 'Buy a gift card for Dad', completed: false },
 ]
 
+const FILTERS = ['All', 'Active', 'Completed']
+
 function App() {
   const [tasks, setTasks] = useState(initialTasks)
-  const [filter, setFilter] = useState('all')
+  const [filter, setFilter] = useState('All')
 
-  function addTask(text) {
-    setTasks((prev) => [...prev, { id: Date.now(), text, completed: false }])
+
+  function handleAdd(text) {
+    const newTask = { id: Date.now(), text, completed: false }
+    setTasks([...tasks, newTask])
   }
 
-  function toggleTask(id) {
-    setTasks((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
+  function handleToggle(id) {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
     )
   }
 
-  function deleteTask(id) {
-    setTasks((prev) => prev.filter((t) => t.id !== id))
+  function handleDelete(id) {
+    setTasks(tasks.filter((task) => task.id !== id))
   }
 
-  const completed = tasks.filter((t) => t.completed).length
 
-  const visibleTasks = tasks.filter((t) => {
-    if (filter === 'active') return !t.completed
-    if (filter === 'completed') return t.completed
+  const totalCount = tasks.length
+  const completedCount = tasks.filter((task) => task.completed).length
+
+  const visibleTasks = tasks.filter((task) => {
+    if (filter === 'Active') return !task.completed
+    if (filter === 'Completed') return task.completed
     return true
   })
-
-  const filterOptions = [
-    { key: 'all', label: 'All' },
-    { key: 'active', label: 'Active' },
-    { key: 'completed', label: 'Completed' },
-  ]
 
   return (
     <>
@@ -60,7 +61,7 @@ function App() {
         </label>
 
         <search>
-          <form action="/search-endpoint" method="GET" className="search-form">
+          <form className="search-form" onSubmit={(e) => e.preventDefault()}>
             <input
               type="search"
               id="site-search"
@@ -71,35 +72,48 @@ function App() {
           </form>
         </search>
 
-        <TaskCounter total={tasks.length} completed={completed} />
+        <TaskCounter total={totalCount} completed={completedCount} />
       </header>
 
       <nav className="tab-container">
         <ul className="tab-menu">
-          <li className="tab-item"><a href="#"><img src={inboxIcon} alt="" />Inbox <span className="count">{tasks.length}</span></a></li>
-          <li className="tab-item"><a href="#"><img src={calendarIcon} alt="" />Today <span className="count">{tasks.length}</span></a></li>
-          <li className="tab-item"><a href="#"><img src={upcomingIcon} alt="" />Upcoming</a></li>
+          <li className="tab-item">
+            <a href="#"><img src={inboxIcon} alt="" />Inbox <span className="count">{totalCount}</span></a>
+          </li>
+          <li className="tab-item">
+            <a href="#"><img src={calendarIcon} alt="" />Today <span className="count">5</span></a>
+          </li>
+          <li className="tab-item">
+            <a href="#"><img src={upcomingIcon} alt="" />Upcoming</a>
+          </li>
         </ul>
       </nav>
 
       <main>
         <h1>Inbox</h1>
-        <TaskForm onAdd={addTask} />
+
         <div className="filters">
-          {filterOptions.map((option, i) => (
-            <span key={option.key}>
-              {i > 0 && <span className="separator">|</span>}
+          {FILTERS.map((name, index) => (
+            <span key={name}>
+              {index > 0 && <span className="separator"> | </span>}
               <button
                 type="button"
-                className={`filter-btn${filter === option.key ? ' active' : ''}`}
-                onClick={() => setFilter(option.key)}
+                className={filter === name ? 'filter-btn active' : 'filter-btn'}
+                onClick={() => setFilter(name)}
               >
-                {option.label}
+                {name}
               </button>
             </span>
           ))}
         </div>
-        <TaskList tasks={visibleTasks} onToggle={toggleTask} onDelete={deleteTask} />
+
+        <TaskForm onAdd={handleAdd} />
+
+        <TaskList
+          tasks={visibleTasks}
+          onToggle={handleToggle}
+          onDelete={handleDelete}
+        />
       </main>
     </>
   )
